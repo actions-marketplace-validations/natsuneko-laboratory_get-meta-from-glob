@@ -1,6 +1,15 @@
 import { getInput, getMultilineInput, setFailed } from "@actions/core";
-import fsp from "fs/promises";
+import fs from "fs";
 import glob from "glob";
+
+function writeFileAsync(path: string, data: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(path, data, (err) => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+}
 
 function getMeta(files: string[]): string[] {
   const meta = files
@@ -32,7 +41,7 @@ async function main() {
       glob.sync(pattern, { cwd: root })
     );
 
-    await fsp.writeFile(output, getMeta(files).join("\n"));
+    await writeFileAsync(output, getMeta(files).join("\n"));
   } catch (err) {
     if (err instanceof Error) setFailed(err.message);
   }
