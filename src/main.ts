@@ -1,8 +1,8 @@
-import core from "@actions/core";
+import { getInput, getMultilineInput, setFailed } from "@actions/core";
 import fsp from "fs/promises";
 import glob from "glob";
 
-const getMeta = (files: string[]): string[] => {
+function getMeta(files: string[]): string[] {
   const meta = files
     .filter((w) => !w.endsWith(".meta"))
     .flatMap((w) => {
@@ -20,13 +20,13 @@ const getMeta = (files: string[]): string[] => {
   return Array.from<string>(new Set<string>(meta)).filter(
     (w) => w !== "Assets.meta"
   );
-};
+}
 
-const main = async () => {
+async function main() {
   try {
-    const patterns = core.getMultilineInput("patterns", { required: true });
-    const root = core.getInput("root") || process.cwd();
-    const output = core.getInput("output", { required: true });
+    const patterns = getMultilineInput("patterns", { required: true });
+    const root = getInput("root") || process.cwd();
+    const output = getInput("output", { required: true });
 
     const files = patterns.flatMap((pattern) =>
       glob.sync(pattern, { cwd: root })
@@ -34,8 +34,8 @@ const main = async () => {
 
     await fsp.writeFile(output, getMeta(files).join("\n"));
   } catch (err) {
-    if (err instanceof Error) core.setFailed(err.message);
+    if (err instanceof Error) setFailed(err.message);
   }
-};
+}
 
 main();
