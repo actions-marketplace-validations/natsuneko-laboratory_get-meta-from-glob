@@ -5,19 +5,49 @@ Create Unity's meta collections from glob patterns.
 ## Usage
 
 ```yaml
-job:
-  deploy:
-    name: deploy
+name: "Release by Tag"
+
+on:
+  push:
+    tags:
+      - v\d+\.\d+\.\d+
+  workflow_dispatch:
+
+jobs:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: natsuneko-laboratory/get-meta-from-glob@v1
         with:
-          patterns:
-            - "NatsunekoLaboratory/SampleProject/**/*.cs"
-            - "NatsunekoLaboratory/SampleProject/**/*.asmdef"
-          output: ./meta
+          lfs: true
+
+      - uses: natsuneko-laboratory/get-meta-from-glob@main
+        with:
+          patterns: |
+            Assets/NatsunekoLaboratory/RefinedAnimationProperty/**/*.*
+          output: ./MetaList
+
+      - run: |
+          mkdir ./dist
+
+      - uses: natsuneko-laboratory/create-unitypackage@main
+        with:
+          meta: ./MetaList
+          output: dist/RefinedAnimationProperty.unitypackage
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: RefinedAnimationProperty.unitypackage
+          path: dist/RefinedAnimationProperty.unitypackage
 ```
+
+## Properties
+
+| Property   | Type   | Required          | Description                         |
+| ---------- | ------ | ----------------- | ----------------------------------- |
+| `patterns` | string | Yes               | Glob patterns, one pattern per line |
+| `root`     | string | No (default: `.`) | Root directory                      |
+| `output`   | string | Yes               | Output filepath                     |
 
 ## License
 
