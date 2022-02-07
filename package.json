@@ -2,7 +2,7 @@
   "name": "@natsuneko-laboratory/get-meta-from-glob",
   "version": "1.0.0",
   "description": "Create Unity's meta collections from glob patterns.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/natsuneko-laboratory/get-meta-from-glob.git",
   "author": "Natsune <me@natsuneko.cat>",
   "license": "MIT",

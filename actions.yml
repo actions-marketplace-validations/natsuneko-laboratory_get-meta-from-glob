@@ -1,0 +1,15 @@
+name: "Get Meta from Glob"
+description: "Create Unity's meta collections from glob patterns."
+inputs:
+  patterns:
+    required: true
+    description: "glob patterns for files to be included in the meta collection"
+  root:
+    required: true
+    description: "root directory of the Unity Project"
+  output:
+    required: true
+    description: "output file path of the meta collection"
+runs:
+  using: "node16"
+  main: "dist/index.js"
