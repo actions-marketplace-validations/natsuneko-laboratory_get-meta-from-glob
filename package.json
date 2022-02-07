@@ -1,0 +1,29 @@
+{
+  "name": "@natsuneko-laboratory/get-meta-from-glob",
+  "version": "1.0.0",
+  "description": "Create Unity's meta collections from glob patterns.",
+  "main": "index.js",
+  "repository": "https://github.com/natsuneko-laboratory/get-meta-from-glob.git",
+  "author": "Natsune <me@natsuneko.cat>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "package": "ncc build --source-map --license LICENSE"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.14",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "@vercel/ncc": "^0.33.1",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@actions/core": "^1.6.0"
+  }
+}
