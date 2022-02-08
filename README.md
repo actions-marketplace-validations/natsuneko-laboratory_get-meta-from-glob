@@ -23,7 +23,7 @@ jobs:
 
       - uses: natsuneko-laboratory/get-meta-from-glob@main
         with:
-          patterns: |
+          includes: |
             Assets/NatsunekoLaboratory/RefinedAnimationProperty/**/*.*
           output: ./MetaList
 
@@ -43,11 +43,12 @@ jobs:
 
 ## Properties
 
-| Property   | Type   | Required          | Description                         |
-| ---------- | ------ | ----------------- | ----------------------------------- |
-| `patterns` | string | Yes               | Glob patterns, one pattern per line |
-| `root`     | string | No (default: `.`) | Root directory                      |
-| `output`   | string | Yes               | Output filepath                     |
+| Property   | Type   | Required           | Description                                   |
+| ---------- | ------ | ------------------ | --------------------------------------------- |
+| `includes` | string | Yes                | Including glob patterns, one pattern per line |
+| `excludes` | string | No (default: `""`) | Excluding glob patterns, one pattern per line |
+| `root`     | string | No (default: `.`)  | Root directory                                |
+| `output`   | string | Yes                | Output filepath                               |
 
 ## License
 

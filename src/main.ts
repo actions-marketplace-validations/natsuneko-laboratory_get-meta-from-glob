@@ -11,6 +11,16 @@ function writeFileAsync(path: string, data: string): Promise<void> {
   });
 }
 
+function runGlob(
+  patterns: string[],
+  excludes: string[],
+  root: string
+): string[] {
+  return patterns.flatMap((pattern) =>
+    glob.sync(pattern, { cwd: root, ignore: excludes })
+  );
+}
+
 function getMeta(files: string[]): string[] {
   const meta = files
     .filter((w) => !w.endsWith(".meta"))
@@ -33,13 +43,12 @@ function getMeta(files: string[]): string[] {
 
 async function main() {
   try {
-    const patterns = getMultilineInput("patterns", { required: true });
+    const includes = getMultilineInput("includes", { required: true });
+    const excludes = getMultilineInput("excludes") || [];
     const root = getInput("root") || process.cwd();
     const output = getInput("output", { required: true });
 
-    const files = patterns.flatMap((pattern) =>
-      glob.sync(pattern, { cwd: root })
-    );
+    const files = runGlob(includes, excludes, root);
 
     await writeFileAsync(output, getMeta(files).join("\n"));
   } catch (err) {
