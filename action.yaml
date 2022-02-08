@@ -1,9 +1,12 @@
 name: "Get Meta from Glob"
 description: "Create Unity's meta collections from glob patterns."
 inputs:
-  patterns:
+  includes:
     required: true
     description: "glob patterns for files to be included in the meta collection"
+  excludes:
+    required: false
+    description: "glob patterns for files to be excluded from the meta collection"
   root:
     required: true
     description: "root directory of the Unity Project"
